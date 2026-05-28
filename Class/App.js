@@ -8,14 +8,18 @@ import { StorageAPI } from "../API/StorageAPI.js";
 export class App{
 
     constructor(){
-
-        this.noteID = 0;
+        
         this.init()
+    }
+
+    init(){
+        
+        this.renderUI();
         this.listener()
         this.renderNotes();
     }
 
-    init(){
+    renderUI(){
 
         // borramos body y creamos el contenedor para la app.
         document.body.innerHTML =
@@ -48,6 +52,8 @@ export class App{
     }
 
     createNote(){
+
+        this.noteID = 0;
         this.noteName = prompt("Título de la nota:");
         this.nota = new Note;
         this.nota.name = this.noteName;
