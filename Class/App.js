@@ -20,12 +20,14 @@ export class App{
         // borramos body y creamos el contenedor para la app.
         document.body.innerHTML =
 
-        `<main>
-            <div class = "appContainer">
-                <button class = "newBtn">Nueva nota</button>
-                <div class = "notesContainer"></div>
-            </div>
-        </main>`
+        `<body>
+            <main>
+                <div class = "appContainer">
+                    <button class = "newBtn">Nueva nota</button>
+                    <div class = "notesContainer"></div>
+                </div>
+            </main>
+        </body>`    
 
         this.appContainer = document.querySelector(".appContainer");
         this.notesContainer = document.querySelector(".notesContainer");
