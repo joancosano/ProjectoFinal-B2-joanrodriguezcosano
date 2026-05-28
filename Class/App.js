@@ -8,14 +8,14 @@ import { StorageAPI } from "../API/StorageAPI.js";
 export class App{
 
     constructor(){
-        
+
         this.init()
     }
 
     init(){
         
         this.renderUI();
-        this.listener()
+        this.listener();
         this.renderNotes();
     }
 
