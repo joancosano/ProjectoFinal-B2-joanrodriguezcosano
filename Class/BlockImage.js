@@ -22,7 +22,7 @@ export class BlockImage extends Block{
         } else {
 
             this.maxWidth = maxWidth;
-
+            
         }
     }
 
