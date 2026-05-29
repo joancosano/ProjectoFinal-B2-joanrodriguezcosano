@@ -4,6 +4,7 @@ import { BlockImage } from "./BlockImage.js";
 import { BlockParagraph } from "./BlockParagraph.js";
 import { Note } from "./Note.js";
 import { StorageAPI } from "../API/StorageAPI.js";
+import { userInterface } from "./UserInterface.js";
 
 export class App{
 
@@ -15,32 +16,24 @@ export class App{
     init(){
         
         this.renderUI();
-        this.listener();
+        this.listeners();
         this.renderNotes();
     }
 
+    
     renderUI(){
 
-        // borramos body y creamos el contenedor para la app.
-        document.body.innerHTML =
+        this.ui = new userInterface();
 
-        `<body>
-            <main>
-                <div class = "appContainer">
-                    <button class = "newBtn">Nueva nota</button>
-                    <div class = "notesContainer"></div>
-                </div>
-            </main>
-        </body>`    
-
-        this.appContainer = document.querySelector(".appContainer");
-        this.notesContainer = document.querySelector(".notesContainer");
     }
 
-    listener(){
+    listeners(){
 
         // Creamos un listener para todo el contenedor
-        this.appContainer.addEventListener("click", (event)=>{
+        const appContainer = this.ui.appContainer;
+        const notesContainer = this.ui.notesContainer;
+
+        appContainer.addEventListener("click", (event)=>{
 
             const elementoPulsado = event.target;
 
@@ -55,11 +48,12 @@ export class App{
 
         this.noteID = 0;
         this.noteName = prompt("Título de la nota:");
-        this.nota = new Note;
-        this.nota.name = this.noteName;
-        this.nota.id = `note_${this.noteID}`
+        this.note = new Note;
+        this.note.name = this.noteName;
+        this.note.id = `note_${this.noteID}`
         this.noteID++
-        StorageAPI.save(this.nota)
+        StorageAPI.save(this.note)
+        console.log("Nota creada:")
         console.log(localStorage.getItem("notes"))
     }
 
