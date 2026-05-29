@@ -6,6 +6,7 @@ import { Note } from "./Note.js";
 import { StorageAPI } from "../API/StorageAPI.js";
 import { userInterface } from "./UserInterface.js";
 
+
 export class App{
 
     constructor(){
@@ -15,9 +16,35 @@ export class App{
 
     init(){
         
+        this.loadNotes();
         this.renderUI();
         this.listeners();
         this.renderNotes();
+    }
+
+    loadNotes(){
+
+        //leemos todas las notas almacenadas en localStore
+        const notesJson = StorageAPI.load() || [];
+        //guardamos un Array con las notas como objeto de la case Note
+        this.notes = notesJson.map(json =>{
+            const note = new Note();
+            note.parse(json);
+            return note
+        });
+    }
+
+    getNextNoteID(){
+
+        if (this.notes.length === 0){
+            return 1;
+        }
+
+        const ids = this.notes.map(note =>{
+            return Number(note.id.replace("note_",""))
+        })
+
+        return Math.max(...ids) +1;
     }
 
     
@@ -44,17 +71,33 @@ export class App{
         })
     }
 
+    
     createNote(){
 
-        this.noteID = 0;
-        this.noteName = prompt("Título de la nota:");
-        this.note = new Note;
-        this.note.name = this.noteName;
-        this.note.id = `note_${this.noteID}`
-        this.noteID++
-        StorageAPI.save(this.note)
+        //creamos una instancia de Note
+        const note = new Note();
+        //pedimos al usuario el nombre
+        const noteName = prompt("Título de la nota:");
+
+         if (!noteName) {
+
+        return;
+
+    }
+        
+        //rellenamos las propiedades
+        note.name = noteName;
+        note.id = `note_${this.getNextNoteID()}`;
+        
+        this.notes.push(note);
+
+        StorageAPI.save(this.notes.map(
+            note => note.plain()
+        ));
+
         console.log("Nota creada:")
-        console.log(localStorage.getItem("notes"))
+        console.log(localStorage.getItem("notes"));
+
     }
 
     renderNotes(){

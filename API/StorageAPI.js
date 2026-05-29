@@ -6,6 +6,6 @@ export class StorageAPI{
     }
     
     static load(){
-        return JSON.parse(localStorage.getItem("notes"))
+        return JSON.parse(localStorage.getItem("notes")) || []
     }
 }
