@@ -78,6 +78,7 @@ export class App{
             const noteCard = event.target.closest("[data-note-id]")
             const newButton = event.target.closest("[data-new-button]");
             const deleteButton = event.target.closest("[data-delete-button]")
+            const backButton = event.target.closest("[data-back-button]");
 
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
@@ -92,9 +93,14 @@ export class App{
             
             if (noteCard){
                 const noteID = noteCard.dataset.noteId;
-                console.log("nota pulsada:" + noteID)
+                this.openNote(noteID);
                 return
             }
+
+            if (backButton){
+                this.ui.showNotesList();
+                return;
+}
 
         })
     }
@@ -137,6 +143,20 @@ export class App{
         console.log(noteID)
 
 
+    }
+
+    openNote(noteID){
+
+        console.log("openNote", noteID);
+        const note = this.notes.find(note => note.id === noteID);
+        
+        if (!note){
+            return;
+        }
+    
+    this.ui.showEditor(note);
+    console.log(note);
+    
     }
 
     renderNotes(){

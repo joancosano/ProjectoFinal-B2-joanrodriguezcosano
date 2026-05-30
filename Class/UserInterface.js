@@ -16,7 +16,7 @@ createNotesContainer(){
         document.body.innerHTML =
 
         `<main>
-            <div class = "appContainer">
+            <div id = "appContainer" class = "appContainer">
 
                 <section id= "notesContainer">
                     <button data-new-button class = "newBtn">Nueva nota</button>
@@ -30,8 +30,10 @@ createNotesContainer(){
         </main>
         `    
 
-        this.appContainer = document.querySelector(".appContainer");
-        this.notesContainer = document.querySelector(".notesContainer")
+        this.appContainer = document.querySelector("#appContainer");
+        this.editorScreen = document.querySelector("#editorScreen");
+        this.notesScreen = document.querySelector("#notesContainer");
+        this.notesContainer = document.querySelector(".notesContainer");
     };
 
 renderNotesList(notesList){
@@ -77,6 +79,31 @@ renderNotesList(notesList){
         this.notesContainer.append(noteCard)
     
     });
-    }    
+    }
+
+    showNotesList(){
+        this.editorScreen.classList.add("hidden");
+        this.notesScreen.classList.remove("hidden");
+    }
+
+
+    showEditor(note){
+        this.notesScreen.classList.add("hidden");
+        this.editorScreen.classList.remove("hidden");
+        
+        this.editorScreen.innerHTML = 
+        
+        `
+        <button data-back-button>← Volver</button>
+        <h1>${note.name}</h1>
+        <div class="editor-content">
+        </div>
+        <div>
+        <button data-add-heading>Añadir cabezera</button>
+        <button data-add-paragraph>Añadir párrafo</button>
+        <button data-add-image>Añadir imagen</button>
+        </div>
+        `;
+    }
 
 }
