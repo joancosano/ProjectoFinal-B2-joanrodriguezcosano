@@ -9,6 +9,9 @@ import { userInterface } from "./UserInterface.js";
 
 export class App{
 
+    notes = [];
+    ui = null;
+
     constructor(){
 
         this.init()
@@ -22,6 +25,7 @@ export class App{
         this.renderNotes();
     }
 
+    // método para leer todas las notas almacenadas en local storage
     loadNotes(){
 
         //leemos todas las notas almacenadas en localStore
@@ -34,6 +38,16 @@ export class App{
         });
     }
 
+    // método para guardar todas las de nuevo en local storage
+    saveNotes(){
+
+         StorageAPI.save(this.notes.map(
+            note => note.plain())
+        )
+
+    }
+
+    // método para buscar la última ID de las notas creadas
     getNextNoteID(){
 
         if (this.notes.length === 0){
@@ -47,7 +61,7 @@ export class App{
         return Math.max(...ids) +1;
     }
 
-    
+    //método para renderizar la interfaz haciendo una instancia userInterface
     renderUI(){
 
         this.ui = new userInterface();
@@ -58,7 +72,6 @@ export class App{
 
         // Creamos un listener para todo el contenedor
         const appContainer = this.ui.appContainer;
-        const notesContainer = this.ui.notesContainer;
 
         appContainer.addEventListener("click", (event)=>{
 
@@ -68,7 +81,7 @@ export class App{
 
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
-                console.log("borrar botton:" + noteID)
+                this.deleteNote(noteID);
                 return
             }
 
@@ -82,8 +95,6 @@ export class App{
                 console.log("nota pulsada:" + noteID)
                 return
             }
-
-
 
         })
     }
@@ -108,14 +119,23 @@ export class App{
         
         this.notes.unshift(note);
 
-        StorageAPI.save(this.notes.map(
-            note => note.plain()
-        ));
-
+        this.saveNotes();
         this.renderNotes();
 
-        console.log("Nota creada:")
-        console.log(localStorage.getItem("notes"));
+        console.log("Nota creada:", note.id);
+
+    }
+
+    deleteNote(noteID){
+        
+        this.notes = this.notes.filter(note => note.id !== noteID);
+
+        this.saveNotes();
+        this.renderNotes();
+
+        console.log("Nota borrada:")
+        console.log(noteID)
+
 
     }
 
