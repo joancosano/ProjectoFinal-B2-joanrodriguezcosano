@@ -1,0 +1,127 @@
+html,
+
+html{
+
+    font-size: 12px;
+
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f7f7f7;
+}
+
+/* CONTENEDOR GENERAL */
+
+.appContainer {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* CABECERA */
+
+#notesContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* BOTÓN NUEVA NOTA */
+
+.newBtn {
+
+    align-self: flex-end;
+
+    border: none;
+    background: transparent;
+
+    color: #4da3ff;
+
+    font-size: 1.4rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    margin-bottom: 25px;
+}
+
+.newBtn:hover {
+    opacity: 0.8;
+}
+
+/* LISTA DE NOTAS */
+
+.notesContainer {
+
+    background: rgba(255, 255, 255, 0.75);
+
+    backdrop-filter: blur(6px);
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    padding: 20px;
+}
+
+/* TARJETA */
+
+.note-card{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    border-bottom: 1px solid #e2e2e2;
+    cursor: pointer;
+}
+
+.note-info{
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.note-date{
+
+    color: #a0a0a0;
+    font-size: 1.3rem;
+}
+ 
+.note-title{
+
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #222;
+}
+
+.delete-button{
+
+    border: none;
+    background: transparent;
+
+    color: #ff6b6b;
+
+    font-size: 1.4rem;
+
+    cursor: pointer;
+}
+
+.note-card{
+
+    transition: all 0.1s ease;
+
+}
+
+.note-card:hover{
+    
+  background-color: #f3f1f1e7;
+    
+
+}

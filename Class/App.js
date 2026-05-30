@@ -62,11 +62,28 @@ export class App{
 
         appContainer.addEventListener("click", (event)=>{
 
-            const elementoPulsado = event.target;
+            const noteCard = event.target.closest("[data-note-id]")
+            const newButton = event.target.closest("[data-new-button]");
+            const deleteButton = event.target.closest("[data-delete-button]")
 
-            if (elementoPulsado.matches(".newBtn")){
-                this.createNote();
+            if (deleteButton){
+                const noteID = noteCard.dataset.noteId;
+                console.log("borrar botton:" + noteID)
+                return
             }
+
+            if (newButton){
+                this.createNote();
+                return
+            }
+            
+            if (noteCard){
+                const noteID = noteCard.dataset.noteId;
+                console.log("nota pulsada:" + noteID)
+                return
+            }
+
+
 
         })
     }
@@ -89,11 +106,13 @@ export class App{
         note.name = noteName;
         note.id = `note_${this.getNextNoteID()}`;
         
-        this.notes.push(note);
+        this.notes.unshift(note);
 
         StorageAPI.save(this.notes.map(
             note => note.plain()
         ));
+
+        this.renderNotes();
 
         console.log("Nota creada:")
         console.log(localStorage.getItem("notes"));
@@ -101,6 +120,7 @@ export class App{
     }
 
     renderNotes(){
+        this.ui.renderNotesList(this.notes)
     }
 
 }

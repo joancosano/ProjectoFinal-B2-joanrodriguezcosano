@@ -19,7 +19,7 @@ createNotesContainer(){
             <div class = "appContainer">
 
                 <section id= "notesContainer">
-                    <button class = "newBtn">Nueva nota</button>
+                    <button data-new-button class = "newBtn">Nueva nota</button>
                     <div class = "notesContainer"></div>
                 </section>
 
@@ -33,5 +33,40 @@ createNotesContainer(){
         this.appContainer = document.querySelector(".appContainer");
         this.notesContainer = document.querySelector(".notesContainer")
     };
+
+renderNotesList(notesList){
+
+    this.notesContainer.innerHTML="";
+
+     notesList.forEach(note => {
+
+        const noteCard = document.createElement("div");
+        noteCard.classList.add("note-card");
+        noteCard.dataset.noteId = note.id;
+
+        const titleContainer = document.createElement("div");
+        const noteTitle = document.createElement("h3");
+        noteTitle.classList.add("note-title");
+        noteTitle.textContent = note.name;
+
+        const noteDateCreated = document.createElement("div");
+        noteDateCreated.classList.add("note-date");
+        noteDateCreated.textContent = note.dateCreated;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("delete-button");
+        deleteButton.dataset.deleteButton = "";
+        deleteButton.textContent = "Delete";
+      
+        titleContainer.append(noteDateCreated);
+        titleContainer.append(noteTitle);
+        
+        noteCard.append(titleContainer);
+        noteCard.append(deleteButton);
+
+        this.notesContainer.append(noteCard)
+
+    });
+    }    
 
 }

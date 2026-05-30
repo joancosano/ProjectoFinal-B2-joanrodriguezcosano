@@ -7,16 +7,16 @@ export class Note{
 
     id;
     name;
-    date_created;
-    date_updated;
+    dateCreated;
+    dateUpdated;
     blocks;
 
-    constructor(id,name,date_updated,blocks = []){
+    constructor(id,name,dateUpdated,blocks = []){
         
         this.id = id;
         this.name = name;
-        this.date_created = new Date().toLocaleDateString();
-        this.date_updated = new Date().toLocaleDateString();
+        this.dateCreated = new Date().toLocaleDateString();
+        this.dateUpdated = new Date().toLocaleDateString();
         this.blocks = blocks;
     }
 
@@ -34,8 +34,8 @@ export class Note{
 
         this.id = data.id;
         this.name = data.name;
-        this.date_created = data.date_created;
-        this.date_updated =  data.date_updated;
+        this.dateCreated = data.dateCreated;
+        this.dateUpdated =  data.dateUpdated;
         this.blocks = data.blocks;
         
     }
@@ -44,8 +44,8 @@ export class Note{
         return JSON.stringify({
             id: this.id,
             name: this.name,
-            date_created: this.date_created,
-            date_updated: this.date_updated,
+            dateCreated: this.dateCreated,
+            dateUpdated: this.dateUpdated,
             blocks: this.blocks
         })
 
