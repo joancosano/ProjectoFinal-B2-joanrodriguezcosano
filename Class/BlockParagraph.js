@@ -2,21 +2,31 @@ import { Block } from "./Block.js";
 
 export class BlockParagraph extends Block{
 
-    highlight
+    highlight;
+   
+    constructor(content = "", highlight = false,){
+        super("paragraph", content);
 
-    constructor(content, highlight = false){
-
-        super("paragraph",content)
-        this.highlight = highlight
+        this.highlight = highlight;
         
     }
 
+    parse(jsonBlock){
+        const data = JSON.parse(jsonBlock);
+        super.parse(jsonBlock);
+        this.highlight = data.config.highlight
+
+    }
+    
+    render(){         
+        return this.highlight
+        ? `<p class="highlight">${this.content}</p>`
+        : `<p>${this.content}</p>`;
+
+    }
 
     dictado(){
-    }
-    
-    render(){ 
+
     }
 
-    
 }

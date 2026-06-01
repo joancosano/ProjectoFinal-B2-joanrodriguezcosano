@@ -21,11 +21,11 @@ export class Note{
     }
 
     addBlock(block,position){
-
+        this.blocks.splice(position, 0, block);
     }
 
     removeBlock(position){
-
+    this.blocks.splice(position, 1);
     }
 
     parse(jsonNote){
@@ -36,23 +36,51 @@ export class Note{
         this.name = data.name;
         this.dateCreated = data.dateCreated;
         this.dateUpdated =  data.dateUpdated;
-        this.blocks = data.blocks;
+        this.blocks = [];
+
+        for (const blockData of data.blocks) {
+
+            let block;
+            
+            switch (blockData.type) {
+                case "heading":
+                    block = new BlockHeading();
+                    break;
+                    
+                case "paragraph":
+                    block = new BlockParagraph();
+                    break;
+                    
+                case "image":
+                    block = new BlockImage();
+                    break;
+                
+                default:
+
+                throw new Error(`Tipo de bloque desconocido: ${blockData.type}`);
+            }
         
+            block.parse(JSON.stringify(blockData));
+        this.blocks.push(block);
     }
 
+    
+}
+
     plain(){
+
         return JSON.stringify({
             id: this.id,
             name: this.name,
             dateCreated: this.dateCreated,
             dateUpdated: this.dateUpdated,
-            blocks: this.blocks
+            blocks: this.blocks.map(block => JSON.parse(block.plain()))
         })
 
     }
 
-    render(){
-
+    render() {
+        return this.blocks.map(block => block.render()).join("");
     }
 
 }

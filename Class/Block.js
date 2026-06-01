@@ -4,26 +4,37 @@ export class Block{
     content;
 
     constructor(type,content){
+
         this.type = type;
         this.content = content;
+
     }
 
-    render(){
-        //Devolvemos un error si el metodo render() no está implementado.
-        throw new Error ("render no implementado")
+
+    plain(){
+
+        // devuelve un JSON con toda la instancia
+        return JSON.stringify(this);
+
     }
 
     parse(jsonBlock){
+
         //guardamos el JSON de entrada de entrada y lo convertimos en un objeto de JS
         const input =  JSON.parse(jsonBlock);
         
         // verificamos que exista la propiedad type
         if(!input.type){
+
             throw new Error ("Typo de bloque no definido")
+
         }
-        // verificamos que la info del typo bloque recibido corresponde con el typo de bloque de la instancia.
+
+        // verificamos que la info del tipo bloque recibido corresponde con el tipo de bloque de la instancia.
         if(input.type !== this.type){
+
             throw new Error ("Datos de entrada incorrectos, no corresponden con este bloque de texto")
+
         }
 
         //configuramos el bloque
@@ -31,9 +42,11 @@ export class Block{
         this.content = input.content;
     }
 
-    plain(){
-        // devuelve un JSON con toda la instancia
-        return JSON.stringify(this);
+    render(){
+
+        //Devolvemos un error si el metodo render() no está implementado.
+        throw new Error ("render no implementado")
+
     }
-    
+
 }

@@ -10,6 +10,7 @@ import { userInterface } from "./UserInterface.js";
 export class App{
 
     notes = [];
+    note = null;
     ui = null;
 
     constructor(){
@@ -75,10 +76,16 @@ export class App{
 
         appContainer.addEventListener("click", (event)=>{
 
+            //listeners para la seccion listas de notas.
             const noteCard = event.target.closest("[data-note-id]")
             const newButton = event.target.closest("[data-new-button]");
             const deleteButton = event.target.closest("[data-delete-button]")
+
+            //listeners para la seccion de edición de nota.
             const backButton = event.target.closest("[data-back-button]");
+            const addHeading = event.target.closest("[data-add-heading]");
+            const addParagraph = event.target.closest("[data-add-paragraph]");
+            const addImage = event.target.closest("[data-add-image]");
 
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
@@ -100,7 +107,25 @@ export class App{
             if (backButton){
                 this.ui.showNotesList();
                 return;
-}
+            }
+            
+            if (addHeading){
+                console.log("adding head");
+                this.addheading();
+                return;
+            }
+
+            if (addParagraph){
+                this.addParagraph();
+                console.log("adding paragraph")
+                return;
+            }
+
+            if (addImage){
+                this.addImage();
+                console.log("adding image")
+                return;
+            }
 
         })
     }
@@ -153,11 +178,40 @@ export class App{
         if (!note){
             return;
         }
-    
+
+    this.note = note;
+
     this.ui.showEditor(note);
     console.log(note);
     
     }
+
+
+    addheading(){
+
+        const heading = new BlockHeading(1,"000000","Encabezado");
+        this.note.addBlock(heading, this.note.blocks.length);
+        console.log(this.note.blocks);
+    
+    }
+
+    addParagraph(){
+
+        const paragraph = new BlockParagraph("texto del parrafo",false)
+        this.note.addBlock(paragraph, this.note.blocks.length);
+        console.log(this.note.blocks);
+
+    }
+
+
+    addImage(){
+
+        const image = new BlockImage("image",true,"%",50)
+        this.note.addBlock(image, this.note.blocks.length);
+        console.log(this.note.blocks);
+
+    }
+
 
     renderNotes(){
         this.ui.renderNotesList(this.notes)
