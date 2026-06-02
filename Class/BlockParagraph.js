@@ -14,8 +14,7 @@ export class BlockParagraph extends Block{
     parse(jsonBlock){
         const data = JSON.parse(jsonBlock);
         super.parse(jsonBlock);
-        this.highlight = data.config.highlight
-
+        this.highlight = data.highlight
     }
     
     render(){         

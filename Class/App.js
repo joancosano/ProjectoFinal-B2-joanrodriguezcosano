@@ -12,6 +12,7 @@ export class App{
     notes = [];
     note = null;
     ui = null;
+    editingBlock = null;
 
     constructor(){
 
@@ -87,6 +88,11 @@ export class App{
             const addParagraph = event.target.closest("[data-add-paragraph]");
             const addImage = event.target.closest("[data-add-image]");
 
+            //listener de los editores de bloques
+            const saveHeading = event.target.closest("[data-save-heading]");
+            const saveParagraph = event.target.closest("[data-save-paragraph]");
+            const saveImage = event.target.closest("[data-save-image]");
+
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
                 this.deleteNote(noteID);
@@ -124,6 +130,21 @@ export class App{
             if (addImage){
                 this.addImage();
                 console.log("adding image")
+                return;
+            }
+
+            if (saveHeading){
+                this.saveHeading();
+                return;
+            }
+            
+            if (saveParagraph){
+                this.saveParagraph();
+                return;
+            }
+
+            if (saveImage){
+                this.saveImage();
                 return;
             }
 
@@ -179,44 +200,91 @@ export class App{
             return;
         }
 
-    this.note = note;
+        this.note = note;
 
-    this.ui.showEditor(note);
-    console.log(note);
+        this.ui.showEditor(note);
+        console.log(note);
     
     }
 
 
     addheading(){
 
-        const heading = new BlockHeading(1,"000000","Encabezado");
-        this.note.addBlock(heading, this.note.blocks.length);
+        const heading = new BlockHeading();
         this.ui.showHeaderEditor(heading);
+        this.editingBlock = heading;
         console.log(this.note.blocks);
     
     }
 
+    saveHeading(){
+
+        this.editingBlock.content = document.querySelector("#headingContent").value;
+        this.editingBlock.level = Number(document.querySelector("#headingLevel").value);
+        this.editingBlock.color = document.querySelector("#headingColor").value.replace("#","");
+        this.note.addBlock(this.editingBlock,this.note.blocks.length);
+        this.editingBlock = null;
+        this.saveNotes();
+        this.ui.showEditor(this.note);
+
+    }
+
     addParagraph(){
 
-        const paragraph = new BlockParagraph("texto del parrafo",false)
-        this.note.addBlock(paragraph, this.note.blocks.length);
+        const paragraph = new BlockParagraph()
         this.ui.showParagraphEditor(paragraph);
+        this.editingBlock = paragraph;
         console.log(this.note.blocks);
-        
         return
 
     }
 
+    saveParagraph(){
 
-    addImage(){
-
-        const image = new BlockImage("image",true,"%",50)
-        this.note.addBlock(image, this.note.blocks.length);
-        this.ui.showImageEditor(image);
-        console.log(this.note.blocks);
+        this.editingBlock.content = document.querySelector("#paragraphContent").value;
+        this.editingBlock.highlight = document.querySelector("#paragraphHighlight").checked;
+        this.note.addBlock(this.editingBlock,this.note.blocks.length);
+        this.editingBlock = null;
+        this.saveNotes();
+        this.ui.showEditor(this.note);;
 
     }
 
+    addImage(){
+
+        const image = new BlockImage();
+        this.editingBlock = image;
+        this.ui.showImageEditor(image);
+    }
+
+    saveImage(){
+
+        this.editingBlock.upscale = document.querySelector("#imageUpscale").checked;
+        this.editingBlock.maxWidth = Number(document.querySelector("#imageMaxWidth").value);
+        this.editingBlock.units = document.querySelector('input[name="units"]:checked').value;
+    
+        const file =document.querySelector("#imageFile").files[0];
+
+        if (!file){
+         return;
+
+        }
+
+        const reader = new FileReader(); 
+
+        reader.onload = () => {
+
+        this.editingBlock.content = reader.result;
+        this.note.addBlock(this.editingBlock, this.note.blocks.length);
+
+        this.editingBlock = null;
+        this.saveNotes();
+        this.ui.showEditor(this.note);
+    };
+
+        reader.readAsDataURL(file);
+
+}
 
     renderNotes(){
         this.ui.renderNotesList(this.notes)

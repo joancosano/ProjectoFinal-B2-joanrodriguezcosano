@@ -105,8 +105,7 @@ export class userInterface{
 
     showHeaderEditor(heading){
 
-    const editor =
-        document.querySelector("#blockEditor");
+    const editor = document.querySelector("#blockEditor");
 
     editor.innerHTML = `
 
@@ -134,133 +133,66 @@ export class userInterface{
             </select>
         </label>
 
-        <label>
-            Color
-            <input
-                id="headingColor"
-                type="color"
-                value="#${heading.color}"
-            >
+        <label> 
+        Color <input id="headingColor" type="color" value="#${heading.color}">
         </label>
 
-        <label>
-            Texto
-            <input
-                id="headingContent"
-                type="text"
-                value="${heading.content}"
-            >
+        <label> Texto
+            <input id="headingContent" type="text" value="${heading.content}">
         </label>
 
-        <button data-save-heading>
-            Guardar cambios
-        </button>
+        <button data-save-heading>Guardar cambios</button>
 
     `;
 
     editor.classList.remove("hidden");
     editor.classList.add("visible");
     }
-
+    
     showParagraphEditor(paragraph){
     
     const blockEditor = document.querySelector("#blockEditor");
-    
+
     blockEditor.innerHTML = 
     
     `<div class="editor-panel">
         <h3>Editar párrafo</h3>
-        <textarea>
-        
-            ${paragraph.content}
-            
-        </textarea>
-    
-        <button>Guardar</button>
-    
-    </div>
+            <label>
+                <input id="paragraphHighlight" type="checkbox"${paragraph.highlight ? "checked" : ""}>Highlight
+            </label>
 
-    `;
-
-    }
+            <textarea id="paragraphContent">${paragraph.content}</textarea>
+            <button data-save-paragraph>Guardar</button>
+    </div>`;
+}
 
     showImageEditor(image){
 
-    const editor =
-        document.querySelector("#blockEditor");
+    const editor = document.querySelector("#blockEditor");
 
-    editor.innerHTML = `
+    editor.innerHTML = `<h2>Editar imagen</h2>
 
-        <h2>Editar imagen</h2>
-
-        <label>
-            Archivo
-            
-            <input
-                type="file"
-                id="imageFile"
-                accept="image/*"
-            >
+        <label>Archivo
+        <input type="file" id="imageFile" accept="image/*">
         </label>
 
-        <label>
-
-            <input
-                type="checkbox"
-                id="imageUpscale"
-                ${image.upscale ? "checked" : ""}
-            >
-
-            Upscale
-
+        <label><input type="checkbox" id="imageUpscale" ${image.upscale ? "checked" : ""}>
+        Upscale
         </label>
 
-        <h3>Unidades</h3>
-
-        <label>
-
-            <input
-                type="radio"
-                name="units"
-                value="px"
-                ${image.units === "px" ? "checked" : ""}
-            >
-
+        <h3>Unidades</h3><label>
+            <input type="radio" name="units" value="px" ${image.units === "px" ? "checked" : ""}>
             px
-
         </label>
 
         <label>
-
-            <input
-                type="radio"
-                name="units"
-                value="%"
-                ${image.units === "%" ? "checked" : ""}
-            >
-
+            <input type="radio" name="units" value="%" ${image.units === "%" ? "checked" : ""}>
             %
-
         </label>
 
-        <label>
+        <label>Max width<input id="imageMaxWidth" type="number" value="${image.maxWidth === "auto" ? "" : image.maxWidth}">
 
-            Max width
-
-            <input
-                id="imageMaxWidth"
-                type="number"
-                value="${image.maxWidth === "auto"
-                    ? ""
-                    : image.maxWidth}"
-            >
-
-        </label>
-
-        <button data-save-image>
-            Guardar cambios
-        </button>
-
+        </label><button data-save-image> Guardar cambios</button>
     `;
 
     editor.classList.remove("hidden");

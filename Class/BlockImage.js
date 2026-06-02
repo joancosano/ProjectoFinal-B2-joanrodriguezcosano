@@ -35,8 +35,8 @@ export class BlockImage extends Block{
 
     super.parse(jsonBlock);
 
-        this.upscale = data.config.upscale;
-        this.units = data.config.units;
+        this.upscale = data.upscale;
+        this.units = data.units;
         
         if (!this.upscale) {
 
@@ -48,7 +48,7 @@ export class BlockImage extends Block{
 
         } else {
 
-            this.maxWidth = data.config.maxWidth;
+            this.maxWidth = data.maxWidth;
             
         }
 

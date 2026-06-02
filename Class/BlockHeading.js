@@ -5,7 +5,7 @@ export class BlockHeading extends Block{
     level;
     color;
 
-    
+
    constructor (level = 1, color = "000000", content = ""){
         super("heading",content)
         this.level = level;
@@ -27,4 +27,16 @@ export class BlockHeading extends Block{
     return `<h${this.level} style="color:#${this.color}">${this.content}</h${this.level}>`;
     }
 
+    plain(){
+
+    return JSON.stringify({
+            type: this.type,
+            content: this.content,
+            config:{
+            level: this.level,
+            color: this.color
+        }
+    });
+
+}
 }
