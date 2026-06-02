@@ -150,7 +150,6 @@ export class App{
 
         })
     }
-
     
     createNote(){
 
@@ -206,7 +205,6 @@ export class App{
         console.log(note);
     
     }
-
 
     addheading(){
 

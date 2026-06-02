@@ -19,8 +19,8 @@ export class BlockHeading extends Block{
 
         super.parse(jsonBlock);
 
-        this.level=data.config.level;
-        this.color=data.config.color;
+        this.level = data.config.level;
+        this.color = data.config.color;
     }
 
     render(){ 

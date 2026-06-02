@@ -61,7 +61,7 @@ export class Note{
             }
         
             block.parse(JSON.stringify(blockData));
-        this.blocks.push(block);
+            this.blocks.push(block);
     }
 
     
