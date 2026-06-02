@@ -36,9 +36,6 @@ export class userInterface{
     
     renderNotesList(notesList){
 
-    //borramos todo el contenedor de notas
-    this.notesContainer.innerHTML="";
-
     //html del icono de la papelera vectorial "svg" que usaremos con el metodo innerHTML para reemplazar el boton "standard" del navegador.
     const btnDelete = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
     <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 
@@ -47,36 +44,30 @@ export class userInterface{
     4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/></svg>`
 
 
-    //renderizamos cada nota dentro del array recibido en noteList.
+    //renderizamos cada nota dentro del array recibido en noteList y usamos template literals para crear cada nota. 
+     let notesCards = "";
+     
      notesList.forEach(note => {
 
-        const noteCard = document.createElement("div");
-        noteCard.classList.add("note-card");
-        noteCard.dataset.noteId = note.id;
+        notesCards +=
 
-        const titleContainer = document.createElement("div");
-        const noteTitle = document.createElement("h3");
-        noteTitle.classList.add("note-title");
-        noteTitle.textContent = note.name;
+        `<div class = "note-card" data-note-id ="${note.id}">
 
-        const noteDateCreated = document.createElement("div");
-        noteDateCreated.classList.add("note-date");
-        noteDateCreated.textContent = note.dateCreated;
+        <div>
 
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("delete-button");
-        deleteButton.dataset.deleteButton = "";
-        deleteButton.innerHTML = btnDelete;
-      
-        titleContainer.append(noteDateCreated);
-        titleContainer.append(noteTitle);
-        
-        noteCard.append(titleContainer);
-        noteCard.append(deleteButton);
+            <div class = "note-date">${note.dateCreated}</div>
+            <h3 class = "note-title">${note.name}</h3>
 
-        this.notesContainer.append(noteCard)
-    
-    });
+        </div>
+
+        <button class = "delete-button" data-delete-button>${btnDelete}</button>
+
+        </div>`;
+
+    })
+
+    this.notesContainer.innerHTML = notesCards;
+
     }
 
     showNotesList(){
@@ -86,6 +77,7 @@ export class userInterface{
 
 
     showEditor(note){
+        
         this.notesScreen.classList.add("hidden");
         this.editorScreen.classList.remove("hidden");
         
@@ -93,15 +85,69 @@ export class userInterface{
         
         `
         <button data-back-button>← Volver</button>
-        <h1>${note.name}</h1>
+            <h1>${note.name}</h1>
         <div class="editor-content">
+            
+            ${note.render()}
+        
         </div>
+        
         <div>
+
+        <div id="blockEditor"></div>
+
         <button data-add-heading>Añadir cabezera</button>
         <button data-add-paragraph>Añadir párrafo</button>
         <button data-add-image>Añadir imagen</button>
+        
         </div>
         `;
     }
+
+        showHeaderEditor(heading){
+        
+        this.notesScreen.classList.add("hidden");
+        this.editorScreen.classList.remove("hidden");
+        
+        this.editorScreen.innerHTML = 
+        
+        `
+        <button data-back-button>← Volver</button>
+            <h1>${note.name}</h1>
+        <div class="editor-content">
+        
+        </div>
+        
+        <div>
+        
+        <button data-add-heading>Añadir cabezera</button>
+        <button data-add-paragraph>Añadir párrafo</button>
+        <button data-add-image>Añadir imagen</button>
+        
+        </div>
+        `;
+    }
+    
+        showParagraphEditor(paragraph){
+            
+            const blockEditor = document.querySelector("#blockEditor");
+            
+            blockEditor.innerHTML = 
+            
+            `<div class="editor-panel">
+            
+            <h3>Editar párrafo</h3>
+            
+            <textarea>
+
+            ${paragraph.content}
+
+            </textarea>
+                    <button>Guardar</button>
+            </div>
+
+    `;
+
+}
 
 }

@@ -191,6 +191,7 @@ export class App{
 
         const heading = new BlockHeading(1,"000000","Encabezado");
         this.note.addBlock(heading, this.note.blocks.length);
+        this.ui.showHeaderEditor(heading);
         console.log(this.note.blocks);
     
     }
@@ -199,7 +200,10 @@ export class App{
 
         const paragraph = new BlockParagraph("texto del parrafo",false)
         this.note.addBlock(paragraph, this.note.blocks.length);
+        this.ui.showParagraphEditor(paragraph);
         console.log(this.note.blocks);
+        
+        return
 
     }
 
@@ -215,6 +219,7 @@ export class App{
 
     renderNotes(){
         this.ui.renderNotesList(this.notes)
+
     }
 
 }
