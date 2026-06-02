@@ -212,6 +212,7 @@ export class App{
 
         const image = new BlockImage("image",true,"%",50)
         this.note.addBlock(image, this.note.blocks.length);
+        this.ui.showImageEditor(image);
         console.log(this.note.blocks);
 
     }

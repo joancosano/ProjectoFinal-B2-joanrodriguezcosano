@@ -75,7 +75,6 @@ export class userInterface{
         this.notesScreen.classList.remove("hidden");
     }
 
-
     showEditor(note){
         
         this.notesScreen.classList.add("hidden");
@@ -104,50 +103,168 @@ export class userInterface{
         `;
     }
 
-        showHeaderEditor(heading){
-        
-        this.notesScreen.classList.add("hidden");
-        this.editorScreen.classList.remove("hidden");
-        
-        this.editorScreen.innerHTML = 
-        
-        `
-        <button data-back-button>← Volver</button>
-            <h1>${note.name}</h1>
-        <div class="editor-content">
-        
-        </div>
-        
-        <div>
-        
-        <button data-add-heading>Añadir cabezera</button>
-        <button data-add-paragraph>Añadir párrafo</button>
-        <button data-add-image>Añadir imagen</button>
-        
-        </div>
-        `;
-    }
-    
-        showParagraphEditor(paragraph){
-            
-            const blockEditor = document.querySelector("#blockEditor");
-            
-            blockEditor.innerHTML = 
-            
-            `<div class="editor-panel">
-            
-            <h3>Editar párrafo</h3>
-            
-            <textarea>
+    showHeaderEditor(heading){
 
-            ${paragraph.content}
+    const editor =
+        document.querySelector("#blockEditor");
 
-            </textarea>
-                    <button>Guardar</button>
-            </div>
+    editor.innerHTML = `
+
+        <h2>Editar cabecera</h2>
+
+        <label>
+            Nivel
+            <select id="headingLevel">
+
+                <option value="1"
+                    ${heading.level === 1 ? "selected" : ""}>
+                    H1
+                </option>
+
+                <option value="2"
+                    ${heading.level === 2 ? "selected" : ""}>
+                    H2
+                </option>
+
+                <option value="3"
+                    ${heading.level === 3 ? "selected" : ""}>
+                    H3
+                </option>
+
+            </select>
+        </label>
+
+        <label>
+            Color
+            <input
+                id="headingColor"
+                type="color"
+                value="#${heading.color}"
+            >
+        </label>
+
+        <label>
+            Texto
+            <input
+                id="headingContent"
+                type="text"
+                value="${heading.content}"
+            >
+        </label>
+
+        <button data-save-heading>
+            Guardar cambios
+        </button>
 
     `;
 
-}
+    editor.classList.remove("hidden");
+    editor.classList.add("visible");
+    }
+
+    showParagraphEditor(paragraph){
+    
+    const blockEditor = document.querySelector("#blockEditor");
+    
+    blockEditor.innerHTML = 
+    
+    `<div class="editor-panel">
+        <h3>Editar párrafo</h3>
+        <textarea>
+        
+            ${paragraph.content}
+            
+        </textarea>
+    
+        <button>Guardar</button>
+    
+    </div>
+
+    `;
+
+    }
+
+    showImageEditor(image){
+
+    const editor =
+        document.querySelector("#blockEditor");
+
+    editor.innerHTML = `
+
+        <h2>Editar imagen</h2>
+
+        <label>
+            Archivo
+            
+            <input
+                type="file"
+                id="imageFile"
+                accept="image/*"
+            >
+        </label>
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="imageUpscale"
+                ${image.upscale ? "checked" : ""}
+            >
+
+            Upscale
+
+        </label>
+
+        <h3>Unidades</h3>
+
+        <label>
+
+            <input
+                type="radio"
+                name="units"
+                value="px"
+                ${image.units === "px" ? "checked" : ""}
+            >
+
+            px
+
+        </label>
+
+        <label>
+
+            <input
+                type="radio"
+                name="units"
+                value="%"
+                ${image.units === "%" ? "checked" : ""}
+            >
+
+            %
+
+        </label>
+
+        <label>
+
+            Max width
+
+            <input
+                id="imageMaxWidth"
+                type="number"
+                value="${image.maxWidth === "auto"
+                    ? ""
+                    : image.maxWidth}"
+            >
+
+        </label>
+
+        <button data-save-image>
+            Guardar cambios
+        </button>
+
+    `;
+
+    editor.classList.remove("hidden");
+    editor.classList.add("visible");
+    }
 
 }
