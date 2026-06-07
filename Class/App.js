@@ -27,7 +27,7 @@ export class App{
         this.listeners();
         this.renderNotes();
     }
-    
+
     // método para leer todas las notas almacenadas en local storage
     loadNotes(){
 
@@ -191,6 +191,9 @@ export class App{
                 this.closeBlockEditor();
                 return;
             }
+
+
+            
 
         })
     }
