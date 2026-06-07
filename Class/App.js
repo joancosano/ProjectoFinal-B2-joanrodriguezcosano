@@ -100,9 +100,12 @@ export class App{
 
             //listener para cerrar el editor
             const closeEditor = event.target.closest("[data-close-editor]");
-            
-        
 
+            // listener para la edición del título de la nota
+            const editNoteTitle = event.target.closest("[data-edit-note-title]");
+            const saveNoteTitle = event.target.closest("[data-save-note-title]");
+
+            
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
                 this.deleteNote(noteID);
@@ -112,6 +115,16 @@ export class App{
             if (newButton){
                 this.createNote();
                 return
+            }
+
+            if(editNoteTitle){
+                this.editNoteTitle();
+                return;
+            }
+
+            if(saveNoteTitle){
+                this.saveNoteTitle();
+                return;
             }
             
             if (noteCard){
@@ -192,10 +205,17 @@ export class App{
                 return;
             }
 
-
-            
-
         })
+    }
+    
+    editNoteTitle(){
+        this.ui.showNoteTitleEditor(this.note);
+    }
+    
+    saveNoteTitle(){
+        this.note.name = document.querySelector("#noteTitleInput").value;
+        this.saveNotes();
+        this.ui.showEditor(this.note);
     }
     
     createNote(){
