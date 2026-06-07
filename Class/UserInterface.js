@@ -91,14 +91,17 @@ export class userInterface{
         
         </div>
         
+        <div id="editorOverlay" class="hidden"></div>
+
         <div>
+            <div id="blockEditor" class="hidden"></div>
+            
+            <div class="editor-actions">
+            <button data-add-heading>Añadir cabecera</button>
+            <button data-add-paragraph>Añadir párrafo</button>
+            <button data-add-image>Añadir imagen</button>
 
-        <div id="blockEditor"></div>
-
-        <button data-add-heading>Añadir cabezera</button>
-        <button data-add-paragraph>Añadir párrafo</button>
-        <button data-add-image>Añadir imagen</button>
-        
+        </div>
         </div>
         `;
     }
@@ -106,6 +109,10 @@ export class userInterface{
     showHeaderEditor(heading){
 
     const editor = document.querySelector("#blockEditor");
+    const overlay = document.querySelector("#editorOverlay");
+    
+    overlay.classList.remove("hidden");
+    editor.classList.remove("hidden");
 
     editor.innerHTML = `
 
@@ -142,6 +149,8 @@ export class userInterface{
         </label>
 
         <button data-save-heading>Guardar cambios</button>
+        <button data-delete-block>Eliminar bloque</button>
+        <button data-close-editor>Cancelar</button>
 
     `;
 
@@ -152,6 +161,10 @@ export class userInterface{
     showParagraphEditor(paragraph){
     
     const blockEditor = document.querySelector("#blockEditor");
+    const overlay = document.querySelector("#editorOverlay");
+    
+    overlay.classList.remove("hidden");
+    blockEditor.classList.remove("hidden");
 
     blockEditor.innerHTML = 
     
@@ -163,12 +176,18 @@ export class userInterface{
 
             <textarea id="paragraphContent">${paragraph.content}</textarea>
             <button data-save-paragraph>Guardar</button>
+            <button data-delete-block>Eliminar bloque</button>
+            <button data-close-editor>Cancelar</button>
     </div>`;
 }
 
     showImageEditor(image){
 
     const editor = document.querySelector("#blockEditor");
+    const overlay = document.querySelector("#editorOverlay");
+    
+    overlay.classList.remove("hidden");
+    editor.classList.remove("hidden");
 
     editor.innerHTML = `<h2>Editar imagen</h2>
 
@@ -193,6 +212,8 @@ export class userInterface{
         <label>Max width<input id="imageMaxWidth" type="number" value="${image.maxWidth === "auto" ? "" : image.maxWidth}">
 
         </label><button data-save-image> Guardar cambios</button>
+        <button data-delete-block>Eliminar bloque</button>
+        <button data-close-editor>Cancelar</button>
     `;
 
     editor.classList.remove("hidden");

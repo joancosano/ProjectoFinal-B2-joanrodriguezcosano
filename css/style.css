@@ -130,24 +130,142 @@ body {
     display: none !important;
 }
 
+/* BLOQUES DE LA NOTA */
+
 .block{
-    padding: 12px 20px;
-    border-bottom: 1px solid #ddd;
-    transition: background-color .2s;
+
+    padding: 10px 10px;
+
+    transition: all 0.1s ease;
+
+    border-radius: 4px;
+}
+
+.block:hover{
+
+    background-color: #f3f1f1e7;
+
+    cursor: pointer;
 }
 
 .block:last-child{
     border-bottom: none;
 }
 
-.block:hover{
-    background-color: #f5f5f5;
-    cursor: pointer;
+/* ELIMINAMOS MÁRGENES POR DEFECTO */
+
+.block h1,
+.block h2,
+.block h3,
+.block h4,
+.block h5,
+.block h6,
+.block p{
+
+    margin: 0;
 }
 
+/* IMÁGENES */
+
+.block img{
+
+    display: block;
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* CONTENEDOR DE LA NOTA */
+
 .editor-content{
-    background: white;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    backdrop-filter: blur(6px);
+
     border-radius: 16px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
     padding: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+}
+
+
+
+.editor-actions{
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+#blockEditor{
+
+    position: fixed;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 400px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+
+    z-index: 1000;
+
+}
+
+.editor-overlay{
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.3);
+
+    z-index: 999;
+}
+
+#editorOverlay{
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.3);
+
+    z-index: 999;
+}
+
+#blockEditor{
+
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 400px;
+    max-width: 90vw;
+
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+
+    z-index: 1000;
 }

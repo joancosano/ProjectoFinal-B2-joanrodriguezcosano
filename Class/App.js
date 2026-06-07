@@ -13,6 +13,7 @@ export class App{
     note = null;
     ui = null;
     editingBlock = null;
+    isNewBlock = false;
 
     constructor(){
 
@@ -92,7 +93,15 @@ export class App{
             const saveHeading = event.target.closest("[data-save-heading]");
             const saveParagraph = event.target.closest("[data-save-paragraph]");
             const saveImage = event.target.closest("[data-save-image]");
-            const blockCard = event.target.closest(".block-card");
+            const blockCard = event.target.closest(".block");
+
+            //listener para borrar el bloque
+            const deleteBlock = event.target.closest("[data-delete-block]");
+
+            //listener para cerrar el editor
+            const closeEditor = event.target.closest("[data-close-editor]");
+            
+        
 
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
@@ -153,6 +162,7 @@ export class App{
                 const index = Number(blockCard.dataset.blockIndex);
                 this.editingBlock = this.note.blocks[index];
 
+                this.isNewBlock = false;
 
                 console.log(`editing: ${this.editingBlock.type}`);
                 
@@ -167,6 +177,18 @@ export class App{
                     case "image": this.ui.showImageEditor(this.editingBlock);
                     break;
                 }
+                return;
+            }
+
+
+            if(deleteBlock){
+                this.deleteBlock();
+                return;
+            }
+            
+            
+            if(closeEditor){
+                this.closeBlockEditor();
                 return;
             }
 
@@ -233,6 +255,7 @@ export class App{
         const heading = new BlockHeading();
         this.ui.showHeaderEditor(heading);
         this.editingBlock = heading;
+        this.isNewBlock = true;
         console.log(this.note.blocks);
     
     }
@@ -242,11 +265,18 @@ export class App{
         this.editingBlock.content = document.querySelector("#headingContent").value;
         this.editingBlock.level = Number(document.querySelector("#headingLevel").value);
         this.editingBlock.color = document.querySelector("#headingColor").value.replace("#","");
-        this.note.addBlock(this.editingBlock,this.note.blocks.length);
+
+        // solo volvemos a guardar el bloque en el caso que sea nuevo.
+
+            if (this.isNewBlock){
+                     this.note.addBlock(this.editingBlock,this.note.blocks.length);
+                    }
+
+        this.isNewBlock = false;
         this.editingBlock = null;
+        
         this.saveNotes();
-        this.ui.showEditor(this.note);
-        console.log("saving heading")
+        this.ui.showEditor(this.note);console.log("saving heading")
 
     }
 
@@ -255,6 +285,7 @@ export class App{
         const paragraph = new BlockParagraph()
         this.ui.showParagraphEditor(paragraph);
         this.editingBlock = paragraph;
+        this.isNewBlock = true;
         console.log(this.note.blocks);
         return
 
@@ -264,9 +295,15 @@ export class App{
 
         this.editingBlock.content = document.querySelector("#paragraphContent").value;
         this.editingBlock.highlight = document.querySelector("#paragraphHighlight").checked;
-        this.note.addBlock(this.editingBlock,this.note.blocks.length);
+
+        if (this.isNewBlock){
+            this.note.addBlock(this.editingBlock,this.note.blocks.length);
+        }
+        
+        this.isNewBlock = false;
         this.editingBlock = null;
         this.saveNotes();
+        
         this.ui.showEditor(this.note);
         console.log("saving Paragraph");
 
@@ -277,6 +314,7 @@ export class App{
         // creamos una nueva instancia de BlockImage
         const image = new BlockImage();
         this.editingBlock = image;
+        this.isNewBlock = true;
 
         // mostramos el editor de imagenes en la interfaz y le pasamos la imagen
         this.ui.showImageEditor(image);
@@ -307,8 +345,15 @@ export class App{
 
         // reader.result contiene la imagen convertida a una cadena Base64.
         this.editingBlock.content = reader.result;
+        
         // Añadimos el bloque de imagen a la nota.
-        this.note.addBlock(this.editingBlock, this.note.blocks.length);
+
+            if (this.isNewBlock){
+                this.note.addBlock(this.editingBlock, this.note.blocks.length);
+            }
+
+            this.isNewBlock = false;
+
         // Limpiamos la referencia al bloque temporal.
         this.editingBlock = null;
         // Guardamos las notas en localStorage.
@@ -322,6 +367,31 @@ export class App{
         reader.readAsDataURL(file);
 
 }
+
+deleteBlock(){
+
+    const index = this.note.blocks.indexOf(this.editingBlock);
+
+    if(index !== -1){
+        this.note.blocks.splice(index,1);
+    }
+
+    this.editingBlock = null;
+    this.saveNotes();
+    this.ui.showEditor(this.note);
+
+}
+
+ closeBlockEditor(){
+
+    const editor = document.querySelector("#blockEditor");
+
+    editor.innerHTML = "";
+    editor.classList.add("hidden");
+
+    document.querySelector("#editorOverlay").classList.add("hidden");
+}
+
 
     renderNotes(){
         this.ui.renderNotesList(this.notes)

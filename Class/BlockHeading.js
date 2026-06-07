@@ -26,7 +26,7 @@ export class BlockHeading extends Block{
     render(index){ 
 
    return `
-        <div class = "block-card" data-block-index="${index}">
+        <div class = "block" data-block-index="${index}">
             <h${this.level}
                 style="color:#${this.color}">
                 ${this.content}
