@@ -174,10 +174,15 @@ export class userInterface{
                 <input id="paragraphHighlight" type="checkbox"${paragraph.highlight ? "checked" : ""}>Highlight
             </label>
 
+         
             <textarea id="paragraphContent">${paragraph.content}</textarea>
+
+            <div class="editor-panel-buttons">
             <button data-save-paragraph>Guardar</button>
             <button data-delete-block>Eliminar bloque</button>
             <button data-close-editor>Cancelar</button>
+            </div>
+            
     </div>`;
 }
 
@@ -190,6 +195,8 @@ export class userInterface{
     editor.classList.remove("hidden");
 
     editor.innerHTML = `<h2>Editar imagen</h2>
+
+    ${image.content ? `<img src="${image.content}" class="image-preview">`: ""}
 
         <label>Archivo
         <input type="file" id="imageFile" accept="image/*">

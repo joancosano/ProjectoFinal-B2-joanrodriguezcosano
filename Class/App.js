@@ -27,7 +27,7 @@ export class App{
         this.listeners();
         this.renderNotes();
     }
-
+    
     // método para leer todas las notas almacenadas en local storage
     loadNotes(){
 
@@ -365,37 +365,35 @@ export class App{
          // Inicia la lectura del archivo y lo convierte a Data URL (Base64).
          // Cuando termine, se disparará automáticamente el evento onload.
         reader.readAsDataURL(file);
-
-}
-
-deleteBlock(){
+    
+    }  
+    
+    deleteBlock(){
 
     const index = this.note.blocks.indexOf(this.editingBlock);
+    
+        if(index !== -1){
+            this.note.blocks.splice(index,1);
+        }
 
-    if(index !== -1){
-        this.note.blocks.splice(index,1);
+        this.editingBlock = null;
+        this.saveNotes();
+        this.ui.showEditor(this.note);
+    
     }
-
-    this.editingBlock = null;
-    this.saveNotes();
-    this.ui.showEditor(this.note);
-
-}
-
- closeBlockEditor(){
-
-    const editor = document.querySelector("#blockEditor");
-
-    editor.innerHTML = "";
-    editor.classList.add("hidden");
-
-    document.querySelector("#editorOverlay").classList.add("hidden");
-}
-
+    
+    closeBlockEditor(){
+        
+        const editor = document.querySelector("#blockEditor");
+        
+        editor.innerHTML = "";
+        editor.classList.add("hidden");
+        document.querySelector("#editorOverlay").classList.add("hidden");
+    
+    }
 
     renderNotes(){
         this.ui.renderNotesList(this.notes)
-
     }
 
 }
