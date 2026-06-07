@@ -54,14 +54,14 @@ export class BlockImage extends Block{
 
     }
     
-    render(){
+    render(index){
 
     if (this.maxWidth === "auto") {
-        return `<img src="${this.content}">`;
+        return `<div data-block-index="${index}" class = "block-card"><img src="${this.content}"></div>`;
 
     }
 
-    return `<img src="${this.content}" style="max-width:${this.maxWidth}${this.units}">`;
+    return `<div data-block-index="${index}" class = "block-card"><img src="${this.content}" style="max-width:${this.maxWidth}${this.units}"></div>`;
 
     }
 

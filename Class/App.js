@@ -92,6 +92,7 @@ export class App{
             const saveHeading = event.target.closest("[data-save-heading]");
             const saveParagraph = event.target.closest("[data-save-paragraph]");
             const saveImage = event.target.closest("[data-save-image]");
+            const blockCard = event.target.closest(".block-card");
 
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
@@ -145,6 +146,27 @@ export class App{
 
             if (saveImage){
                 this.saveImage();
+                return;
+            }
+
+            if(blockCard){
+                const index = Number(blockCard.dataset.blockIndex);
+                this.editingBlock = this.note.blocks[index];
+
+
+                console.log(`editing: ${this.editingBlock.type}`);
+                
+                switch(this.editingBlock.type){
+                    
+                    case "heading": this.ui.showHeaderEditor(this.editingBlock);
+                    break;
+                    
+                    case "paragraph": this.ui.showParagraphEditor(this.editingBlock);
+                    break;
+                    
+                    case "image": this.ui.showImageEditor(this.editingBlock);
+                    break;
+                }
                 return;
             }
 
@@ -224,6 +246,7 @@ export class App{
         this.editingBlock = null;
         this.saveNotes();
         this.ui.showEditor(this.note);
+        console.log("saving heading")
 
     }
 
@@ -244,42 +267,58 @@ export class App{
         this.note.addBlock(this.editingBlock,this.note.blocks.length);
         this.editingBlock = null;
         this.saveNotes();
-        this.ui.showEditor(this.note);;
+        this.ui.showEditor(this.note);
+        console.log("saving Paragraph");
 
     }
 
     addImage(){
 
+        // creamos una nueva instancia de BlockImage
         const image = new BlockImage();
         this.editingBlock = image;
+
+        // mostramos el editor de imagenes en la interfaz y le pasamos la imagen
         this.ui.showImageEditor(image);
     }
 
     saveImage(){
 
+        // Leemos las opciones configuradas por el usuario para el bloque de imagen.
         this.editingBlock.upscale = document.querySelector("#imageUpscale").checked;
         this.editingBlock.maxWidth = Number(document.querySelector("#imageMaxWidth").value);
         this.editingBlock.units = document.querySelector('input[name="units"]:checked').value;
-    
-        const file =document.querySelector("#imageFile").files[0];
+        // Obtenemos el archivo seleccionado en el input type="file".
+        const file = document.querySelector("#imageFile").files[0];
 
         if (!file){
          return;
 
         }
 
+        // Creamos una instancia de la API global FileReader.
         const reader = new FileReader(); 
+
+        // Esta función se ejecutará cuando el archivo termine de leerse.
+        // La lectura es asíncrona, por eso el código que depende del archivo
+        // debe estar dentro de onload.
 
         reader.onload = () => {
 
+        // reader.result contiene la imagen convertida a una cadena Base64.
         this.editingBlock.content = reader.result;
+        // Añadimos el bloque de imagen a la nota.
         this.note.addBlock(this.editingBlock, this.note.blocks.length);
-
+        // Limpiamos la referencia al bloque temporal.
         this.editingBlock = null;
+        // Guardamos las notas en localStorage.
         this.saveNotes();
+        // Volvemos a renderizar el editor mostrando la nueva imagen.
         this.ui.showEditor(this.note);
     };
 
+         // Inicia la lectura del archivo y lo convierte a Data URL (Base64).
+         // Cuando termine, se disparará automáticamente el evento onload.
         reader.readAsDataURL(file);
 
 }

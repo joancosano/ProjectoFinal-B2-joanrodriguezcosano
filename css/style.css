@@ -130,3 +130,24 @@ body {
     display: none !important;
 }
 
+.block{
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color .2s;
+}
+
+.block:last-child{
+    border-bottom: none;
+}
+
+.block:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.editor-content{
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+}

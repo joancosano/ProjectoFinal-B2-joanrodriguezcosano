@@ -17,10 +17,17 @@ export class BlockParagraph extends Block{
         this.highlight = data.highlight
     }
     
-    render(){         
-        return this.highlight
-        ? `<p class="highlight">${this.content}</p>`
-        : `<p>${this.content}</p>`;
+    render(index){
+        
+        if (this.highlight){
+             return `<div class="block-card" data-block-index="${index}">
+                    <p class="highlight">${this.content}</p>
+                </div>`
+        }
+       
+        return `<div class="block-card" data-block-index="${index}">
+            <p>${this.content}</p>
+        </div>`
 
     }
 

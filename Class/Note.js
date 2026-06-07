@@ -80,7 +80,17 @@ export class Note{
     }
 
     render() {
-        return this.blocks.map(block => block.render()).join("");
+        
+        // Recorremos todos los bloques de la nota y llamamos
+        // al método render() de cada uno de ellos.
+        // map() devuelve un array con el HTML generado por cada bloque.
+        // join("") une todos esos fragmentos HTML en un único string.
+        // pasamos el parámetro index para poder localizar el bloque en el caso que el usuario quiera editarlo.
+
+        return this.blocks.map(
+            (block,index) => block.render(index)
+        ).join("");
+
     }
 
 }

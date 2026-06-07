@@ -23,8 +23,16 @@ export class BlockHeading extends Block{
         this.color = data.config.color;
     }
 
-    render(){ 
-    return `<h${this.level} style="color:#${this.color}">${this.content}</h${this.level}>`;
+    render(index){ 
+
+   return `
+        <div class = "block-card" data-block-index="${index}">
+            <h${this.level}
+                style="color:#${this.color}">
+                ${this.content}
+        </h${this.level}>
+        </div>
+    `;
     }
 
     plain(){
