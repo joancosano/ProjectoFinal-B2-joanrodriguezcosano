@@ -127,6 +127,7 @@ export class userInterface{
         editor.classList.remove("hidden");
 
         editor.innerHTML = `
+
             <div class="editor-panel">
                 <h2>Edición de cabecera</h2>
                     <div id="headingPreview" style="color:#${heading.color}">
@@ -142,22 +143,21 @@ export class userInterface{
                 </select>
             </label>
 
-    <label>Color
-        <input id="headingColor" type="color" value="#${heading.color}">
-    </label>
+            <label>Color
+                <input id="headingColor" type="color" value="#${heading.color}">
+            </label>
 
-    </div>
-        <input id="headingContent" type="text" value="${heading.content}" placeholder="Texto de la cabecera">
-            <div class="editor-panel-buttons">
-                <button class="modal-btn btn-save" data-save-heading>Guardar</button>
-                <button class="modal-btn btn-delete" data-delete-block>Eliminar cabecera</button>
-                <button class="modal-btn btn-cancel" data-close-editor>Cancelar</button>
-                </div>
-            </div>`;
+            </div>
+                <input id="headingContent" type="text" value="${heading.content}" placeholder="Texto de la cabecera">
+                    <div class="editor-panel-buttons">
+                        <button class="modal-btn btn-save" data-save-heading>Guardar</button>
+                        <button class="modal-btn btn-delete" data-delete-block>Eliminar cabecera</button>
+                        <button class="modal-btn btn-cancel" data-close-editor>Cancelar</button>
+                    </div>
+            </div>
+            `;
 
-
-        //
-}
+    }
       
     showParagraphEditor(paragraph){
     
@@ -186,7 +186,7 @@ export class userInterface{
         </div>
         
         `;
-}
+    }
 
     showImageEditor(image){
 
@@ -231,28 +231,29 @@ export class userInterface{
             
             </div>
     `;
-
-    editor.classList.add("visible");
-}
+    
+        editor.classList.add("visible");
+    
+    }
 
     showNoteTitleEditor(note){
         
         const editor = document.querySelector("#blockEditor");
         const overlay = document.querySelector("#editorOverlay");
 
-    overlay.classList.remove("hidden");
-    editor.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+        editor.classList.remove("hidden");
 
-    editor.innerHTML = `
+        editor.innerHTML = `
 
-        <h2>Edición de título</h2>
-        <input id="noteTitleInput" type="text" value="${note.name}">
+            <h2>Edición de título</h2>
+            <input id="noteTitleInput" type="text" value="${note.name}">
         
-        <div class="editor-panel-buttons">
-            <button data-save-note-title class="modal-btn btn-save">Guardar</button>
-            <button data-close-editor class="modal-btn btn-cancel">Cancelar</button>
-        </div>
-    `;
+            <div class="editor-panel-buttons">
+                <button data-save-note-title class="modal-btn btn-save">Guardar</button>
+                <button data-close-editor class="modal-btn btn-cancel">Cancelar</button>
+            </div>
+        `;
 
     }
 
