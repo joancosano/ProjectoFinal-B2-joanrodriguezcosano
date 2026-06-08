@@ -54,15 +54,17 @@ export class BlockImage extends Block{
 
     }
     
-    render(index){
+   render(index){
 
-    if (this.maxWidth === "auto") {
-        return `<div data-block-index="${index}" draggable="true" class = "block"><img src="${this.content}"></div>`;
+    // comprobamos si upscale está activado. Si es así devolvemos siempre escala 100%. de lo contrario devolvemos los valores de escala y unidades.
+    const style = this.upscale
+        ? "width:100%;"
+        : `max-width:${this.maxWidth}${this.units};`;
 
-    }
-
-    return `<div data-block-index="${index}" draggable="true" class = "block"><img src="${this.content}" style="max-width:${this.maxWidth}${this.units}"></div>`;
-
-    }
+    return `
+        <div data-block-index="${index}" draggable="true" class="block">
+            <img src="${this.content}" style="${style}">
+        </div>`;
+}
 
 }

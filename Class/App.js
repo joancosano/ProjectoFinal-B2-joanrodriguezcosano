@@ -400,10 +400,15 @@ export class App{
         // Obtenemos el archivo seleccionado en el input type="file".
         const file = document.querySelector("#imageFile").files[0];
 
-        if (!file){
-         return;
+       
+        // 
 
-        }
+    if(!file){
+        this.saveNotes();
+        console.log(this.editingBlock);
+        this.ui.showEditor(this.note);
+        return;
+    }
 
         // Creamos una instancia de la API global FileReader.
         const reader = new FileReader(); 
