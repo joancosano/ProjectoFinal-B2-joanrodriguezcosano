@@ -128,13 +128,12 @@ body{
     border-radius: 8px;
 }
 
+.block{
+    cursor:grab;
+}
 
-
-.note-header{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
+.block:active{
+    cursor:grabbing;
 }
 
 .note-title-editor{
@@ -416,4 +415,100 @@ body{
 #paragraphContent:focus{
     outline: none;
     border-color: #4da3ff;
+}
+
+/*Botón guardar */
+
+.top-bar{
+    margin-bottom:20px;
+}
+
+.note-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+}
+
+.note-title-group{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.note-menu-container{
+
+    position: relative;
+
+    margin-left: auto;
+
+}
+
+.note-menu-btn{
+    border:none;
+    background:transparent;
+    color:#4da3ff;
+    font-size:2rem;
+    cursor:pointer;
+}
+
+
+
+.note-menu{
+
+    position: absolute;
+
+    top: 100%;
+
+    right: 0;
+
+    z-index: 9999;
+
+    background: white;
+
+    border-radius: 12px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+
+    min-width: 220px;
+
+    overflow: hidden;
+
+}
+
+.note-menu button{
+
+    width: 100%;
+
+    border: none;
+
+    background: white;
+
+    padding: 15px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+.note-menu button:hover{
+
+    background: #f5f5f5;
+
+}
+
+.note-menu{
+    animation: menuFade .15s ease;
+}
+
+@keyframes menuFade{
+    from{
+        opacity:0;
+        transform:translateY(-5px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }

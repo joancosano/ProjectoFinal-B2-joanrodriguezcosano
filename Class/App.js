@@ -42,6 +42,26 @@ export class App{
         });
     }
 
+    saveCurrentNote(){
+
+        const index = this.notes.findIndex(note => note.id === this.note.id);
+        this.notes[index] = this.note;
+        
+        this.originalNote = new Note();
+        this.originalNote.parse(this.note.plain());
+        
+        this.saveNotes();
+        this.ui.showEditor(this.note);
+
+    }
+
+    discardChanges(){
+        
+        this.note = new Note();
+        this.note.parse(this.originalNote.plain());
+        this.ui.showEditor(this.note);
+    }
+
     // método para guardar todas las de nuevo en local storage
     saveNotes(){
 
@@ -136,6 +156,11 @@ export class App{
             const editNoteTitle = event.target.closest("[data-edit-note-title]");
             const saveNoteTitle = event.target.closest("[data-save-note-title]");
 
+            // listener para el boton guardar / descartar cambios en la nota
+            const noteMenuButton = event.target.closest("[data-note-menu]");
+            const saveNote = event.target.closest("[data-save-note]");
+            const discardNote = event.target.closest("[data-discard-note]");
+
             
             if (deleteButton){
                 const noteID = noteCard.dataset.noteId;
@@ -150,6 +175,21 @@ export class App{
 
             if(editNoteTitle){
                 this.editNoteTitle();
+                return;
+            }
+
+            if(noteMenuButton){
+                document.querySelector("#noteMenu").classList.toggle("hidden");
+                return;
+            }
+
+            if(saveNote){
+                this.saveCurrentNote();
+                return;
+            }
+
+            if(discardNote){
+                this.discardChanges();
                 return;
             }
 
@@ -236,6 +276,16 @@ export class App{
                 return;
             }
 
+            if(saveNote){
+                this.saveCurrentNote();
+                return;
+            }
+
+            if(discardNote){
+                this.discardChanges();
+                return;
+            }
+
         })
     }
     
@@ -245,7 +295,6 @@ export class App{
     
     saveNoteTitle(){
         this.note.name = document.querySelector("#noteTitleInput").value;
-        this.saveNotes();
         this.ui.showEditor(this.note);
     }
     
@@ -296,10 +345,14 @@ export class App{
         if (!note){
             return;
         }
+        
+        this.originalNote = note;
+        
+        this.note = new Note();
+        this.note.parse(note.plain());
+           
 
-        this.note = note;
-
-        this.ui.showEditor(note);
+        this.ui.showEditor(this.note);
         console.log(note);
     
     }
@@ -313,9 +366,6 @@ export class App{
 
     // utilizamos el metodo splice para insertar el bloque del indice de destino
     this.note.blocks.splice(toIndex,0,block);
-
-     // guardamos la nota
-    this.saveNotes();
 
     // la mostramos modificada
     this.ui.showEditor(this.note);
@@ -346,7 +396,6 @@ export class App{
         this.isNewBlock = false;
         this.editingBlock = null;
         
-        this.saveNotes();
         this.ui.showEditor(this.note);console.log("saving heading")
 
     }
@@ -373,7 +422,6 @@ export class App{
         
         this.isNewBlock = false;
         this.editingBlock = null;
-        this.saveNotes();
         
         this.ui.showEditor(this.note);
         console.log("saving Paragraph");
@@ -404,7 +452,6 @@ export class App{
         // 
 
     if(!file){
-        this.saveNotes();
         console.log(this.editingBlock);
         this.ui.showEditor(this.note);
         return;
@@ -432,8 +479,7 @@ export class App{
 
         // Limpiamos la referencia al bloque temporal.
         this.editingBlock = null;
-        // Guardamos las notas en localStorage.
-        this.saveNotes();
+        
         // Volvemos a renderizar el editor mostrando la nueva imagen.
         this.ui.showEditor(this.note);
     };
@@ -453,7 +499,6 @@ export class App{
         }
 
         this.editingBlock = null;
-        this.saveNotes();
         this.ui.showEditor(this.note);
     
     }

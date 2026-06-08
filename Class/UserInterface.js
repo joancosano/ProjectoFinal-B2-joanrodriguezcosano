@@ -89,12 +89,41 @@ export class userInterface{
         
         this.editorScreen.innerHTML = `
 
-        <button data-back-button class="back-btn">${backBtn}</button>
+   <div class="top-bar">
 
-        <div class="note-header">
-            <h1 class="note-title-editor" id="noteTitle">${note.name}</h1>
-            <button data-edit-note-title class="edit-title-btn">${btnTitleEdit}</button>
+    <button data-back-button>${backBtn}</button>
+
+    <div class="note-header">
+
+        <div class="note-title-group">
+
+            <h1 class="note-title-editor">${note.name}</h1>
+
+            <button data-edit-note-title class="edit-title-btn">
+
+                ${btnTitleEdit}
+
+            </button>
+
         </div>
+
+        <div class="note-menu-container">
+
+            <button data-note-menu class="note-menu-btn">⋮</button>
+
+            <div id="noteMenu" class="note-menu hidden">
+
+                <button data-save-note>Guardar cambios</button>
+
+                <button data-discard-note>Descartar cambios</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
         <div class="editor-content">
             
