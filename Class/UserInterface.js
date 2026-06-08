@@ -225,7 +225,7 @@ export class userInterface{
             </div>
 
             <div class="editor-panel-buttons"><button data-save-image class="modal-btn btn-save"> Guardar</button>
-                    <button data-delete-block class="modal-btn btn-delete">Eliminar ímagen</button>
+                    <button data-delete-block class="modal-btn btn-delete">Eliminar imágen</button>
                     <button data-close-editor class="modal-btn btn-cancel">Cancelar</button>
             </div>
             
