@@ -26,11 +26,8 @@ export class BlockHeading extends Block{
     render(index){ 
 
    return `
-        <div class = "block" data-block-index="${index}">
-            <h${this.level}
-                style="color:#${this.color}">
-                ${this.content}
-        </h${this.level}>
+        <div class = "block" draggable="true" data-block-index="${index}">
+            <h${this.level} style="color:#${this.color}">${this.content}</h${this.level}>
         </div>
     `;
     }

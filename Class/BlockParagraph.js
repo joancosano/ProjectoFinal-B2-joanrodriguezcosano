@@ -20,12 +20,12 @@ export class BlockParagraph extends Block{
     render(index){
         
         if (this.highlight){
-             return `<div class="block" data-block-index="${index}">
+             return `<div class="block" draggable="true" data-block-index="${index}">
                     <p class="highlight">${this.content}</p>
                 </div>`
         }
        
-        return `<div class="block" data-block-index="${index}">
+        return `<div class="block" draggable="true" data-block-index="${index}">
             <p>${this.content}</p>
         </div>`
 

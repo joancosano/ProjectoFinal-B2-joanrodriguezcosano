@@ -14,6 +14,7 @@ export class App{
     ui = null;
     editingBlock = null;
     isNewBlock = false;
+    draggedIndex = null;
 
     constructor(){
 
@@ -75,6 +76,36 @@ export class App{
 
         // Creamos un listener para todo el contenedor
         const appContainer = this.ui.appContainer;
+
+        // listener de drag
+
+        appContainer.addEventListener("dragstart", (event)=>{
+            const block = event.target.closest(".block");
+            if(!block) return;
+            
+            this.draggedIndex = Number(block.dataset.blockIndex);
+
+        });
+        
+         // listener de arrastrar - para que funcione drop ha de esxistir el listener dragover y prevent default.
+
+        appContainer.addEventListener("dragover", (event)=>{
+            if(event.target.closest(".block")){
+                event.preventDefault();
+            }
+        });
+
+        // listener de soltar - guardamos el "indice target" es decir el indice destino
+
+        appContainer.addEventListener("drop", (event)=>{
+            
+            const targetBlock = event.target.closest(".block");
+            if(!targetBlock) return;
+            const targetIndex = Number(targetBlock.dataset.blockIndex);
+            this.moveBlock(this.draggedIndex, targetIndex);
+        
+        });
+
 
         appContainer.addEventListener("click", (event)=>{
 
@@ -273,6 +304,23 @@ export class App{
     
     }
 
+    moveBlock(fromIndex, toIndex){
+
+    if(fromIndex === toIndex) return;
+
+    // utilizamos el metodo splice para eliminar el bloque del indice original
+    const block = this.note.blocks.splice(fromIndex, 1)[0];
+
+    // utilizamos el metodo splice para insertar el bloque del indice de destino
+    this.note.blocks.splice(toIndex,0,block);
+
+     // guardamos la nota
+    this.saveNotes();
+
+    // la mostramos modificada
+    this.ui.showEditor(this.note);
+
+}
     addheading(){
 
         const heading = new BlockHeading();

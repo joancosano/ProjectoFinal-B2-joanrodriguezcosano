@@ -57,11 +57,11 @@ export class BlockImage extends Block{
     render(index){
 
     if (this.maxWidth === "auto") {
-        return `<div data-block-index="${index}" class = "block"><img src="${this.content}"></div>`;
+        return `<div data-block-index="${index}" draggable="true" class = "block"><img src="${this.content}"></div>`;
 
     }
 
-    return `<div data-block-index="${index}" class = "block"><img src="${this.content}" style="max-width:${this.maxWidth}${this.units}"></div>`;
+    return `<div data-block-index="${index}" draggable="true" class = "block"><img src="${this.content}" style="max-width:${this.maxWidth}${this.units}"></div>`;
 
     }
 
