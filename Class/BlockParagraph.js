@@ -20,13 +20,18 @@ export class BlockParagraph extends Block{
     render(index){
         
         if (this.highlight){
+            
+            // añadimos un replace para conservar los saltos de linea dentro de un párrafo
+
              return `<div class="block" draggable="true" data-block-index="${index}">
-                    <p class="highlight">${this.content}</p>
+                     <p>${this.content.replace(/\n/g, "<br>")}</p>
                 </div>`
         }
        
+        // añadimos un replace para conservar los saltos de linea dentro de un párrafo.
+
         return `<div class="block" draggable="true" data-block-index="${index}">
-            <p>${this.content}</p>
+             <p>${this.content.replace(/\n/g, "<br>")}</p>
         </div>`
 
     }
