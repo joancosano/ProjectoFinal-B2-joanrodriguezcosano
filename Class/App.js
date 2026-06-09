@@ -160,6 +160,7 @@ export class App{
             const noteMenuButton = event.target.closest("[data-note-menu]");
             const saveNote = event.target.closest("[data-save-note]");
             const discardNote = event.target.closest("[data-discard-note]");
+            const startDictation = event.target.closest("[data-start-dictation]");
 
             
             if (deleteButton){
@@ -239,6 +240,11 @@ export class App{
 
             if (saveImage){
                 this.saveImage();
+                return;
+            }
+
+            if(startDictation){
+                this.startDictation();
                 return;
             }
 
@@ -515,6 +521,43 @@ export class App{
 
     renderNotes(){
         this.ui.renderNotesList(this.notes)
+    }
+
+    startDictation(){
+
+        // comprobamos que el navegador sea comatible con reconocimiento de voz
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if(!SpeechRecognition){
+            alert("Tu navegador no soporta reconocimiento de voz");
+            return;
+        }
+
+    // cramos una nueva instancia
+    const recognition = new SpeechRecognition();
+
+    // configuramos el reconococimiento de voz (idioma, escucha continua para evitar repetir frases, y no devolver resultados también para evitar repetir palabras.)
+    recognition.lang = "es-ES";
+    recognition.continuous = true;
+    recognition.interimResults = false;
+
+    // seleccionamos el contenedor del parrafo.
+    const textarea = document.querySelector("#paragraphContent");
+
+    //recogemos los resultados de la transcripción y lo guardamos en el contenido del parrafo. Tambíen sumandolo al texto del parrafo existente añadiento un espacio.
+    recognition.onresult = (event)=>{
+
+        const transcript = event.results[event.results.length - 1][0].transcript;
+
+        textarea.value += (textarea.value ? " " : "") + transcript;
+    };
+
+    recognition.onerror = (event)=>{
+        console.error("Error de reconocimiento:", event.error);
+    };
+
+    recognition.start();
     }
 
 }

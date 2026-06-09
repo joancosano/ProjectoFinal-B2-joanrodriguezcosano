@@ -511,3 +511,36 @@ body{
         transform:translateY(0);
     }
 }
+
+.mic-btn{
+    background:#4da3ff;
+    color:white;
+    margin:15px 0 20px;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+}
+.mic-btn:hover{ 
+    opacity: .9;
+    transform: scale(1.05);
+}
+
+.mic-btn svg{
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+.mic-btn{
+    background:#4da3ff;
+    color:white;
+    margin:15px 0 20px;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}

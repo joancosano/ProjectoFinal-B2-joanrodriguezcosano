@@ -190,8 +190,10 @@ export class userInterface{
       
     showParagraphEditor(paragraph){
     
+        
         const blockEditor = document.querySelector("#blockEditor");
         const overlay = document.querySelector("#editorOverlay");
+        const micBtn = `<svg height="30" viewBox="0 0 85 151" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M43.9,90.5c-8.9,0-16.1-7.3-16.1-16.2V37.9c0-9,7.2-16.2,16.1-16.2C52.8,21.7,60,29,60,37.9v36.3C60,83.2,52.8,90.5,43.9,90.5ZM65.8,64h10.8v13.8c0,15.4-12.1,28.1-27.3,29v11.3h16.2v10.8H22.3v-10.8h16.2v-11.3c-15.2-0.9-27.3-13.6-27.3-29V64h10.8v13.8c0,10.1,8.2,18.2,18.2,18.2h7.3c10.1,0,18.2-8.2,18.2-18.2V64Z"/></svg>`;
     
         overlay.classList.remove("hidden");
         blockEditor.classList.remove("hidden");
@@ -201,11 +203,13 @@ export class userInterface{
         <div class="editor-panel">
             <h2>Edición de párrafo</h2>
             <textarea id="paragraphContent">${paragraph.content}</textarea>
-        
+             <div><button data-start-dictation class="mic-btn">${micBtn}</button></div>
+
             <label class="checkbox-label">
                 <input id="paragraphHighlight" type="checkbox" ${paragraph.highlight ? "checked" : ""}>
                 Highlight
                 </label>
+               
 
             <div class="editor-panel-buttons"><button class="modal-btn btn-save" data-save-paragraph>Guardar</button>
                 <button class="modal-btn btn-delete" data-delete-block>Eliminar párrafo</button>
