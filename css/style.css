@@ -456,37 +456,23 @@ body{
 .note-menu{
 
     position: absolute;
-
     top: 100%;
-
     right: 0;
-
     z-index: 9999;
-
     background: white;
-
     border-radius: 12px;
-
     box-shadow: 0 8px 20px rgba(0,0,0,.15);
-
     min-width: 220px;
-
     overflow: hidden;
-
 }
 
 .note-menu button{
 
     width: 100%;
-
     border: none;
-
     background: white;
-
     padding: 15px;
-
     text-align: left;
-
     cursor: pointer;
 
 }

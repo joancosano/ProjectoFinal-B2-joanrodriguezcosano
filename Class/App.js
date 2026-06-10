@@ -316,7 +316,6 @@ export class App{
         return;
 
     }
-        
         //rellenamos las propiedades
         note.name = noteName;
         note.id = `note_${this.getNextNoteID()}`;
@@ -457,11 +456,11 @@ export class App{
        
         // 
 
-    if(!file){
-        console.log(this.editingBlock);
-        this.ui.showEditor(this.note);
-        return;
-    }
+        if(!file){
+            console.log(this.editingBlock);
+            this.ui.showEditor(this.note);
+            return;
+        }
 
         // Creamos una instancia de la API global FileReader.
         const reader = new FileReader(); 
@@ -534,23 +533,23 @@ export class App{
             return;
         }
 
-    // cramos una nueva instancia
-    const recognition = new SpeechRecognition();
+        // cramos una nueva instancia
+        const recognition = new SpeechRecognition();
 
-    // configuramos el reconococimiento de voz (idioma, escucha continua para evitar repetir frases, y no devolver resultados también para evitar repetir palabras.)
-    recognition.lang = "es-ES";
-    recognition.continuous = true;
-    recognition.interimResults = false;
+        // configuramos el reconococimiento de voz (idioma, escucha continua para evitar repetir frases, y no devolver resultados también para evitar repetir palabras.)
+        recognition.lang = "es-ES";
+        recognition.continuous = true;
+        recognition.interimResults = false;
 
-    // seleccionamos el contenedor del parrafo.
-    const textarea = document.querySelector("#paragraphContent");
+        // seleccionamos el contenedor del parrafo.
+        const textarea = document.querySelector("#paragraphContent");
 
-    //recogemos los resultados de la transcripción y lo guardamos en el contenido del parrafo. Tambíen sumandolo al texto del parrafo existente añadiento un espacio.
-    recognition.onresult = (event)=>{
+        //recogemos los resultados de la transcripción y lo guardamos en el contenido del parrafo. Tambíen sumandolo al texto del parrafo existente añadiento un espacio.
+        recognition.onresult = (event)=>{
 
-        const transcript = event.results[event.results.length - 1][0].transcript;
+            const transcript = event.results[event.results.length - 1][0].transcript;
 
-        textarea.value += (textarea.value ? " " : "") + transcript;
+            textarea.value += (textarea.value ? " " : "") + transcript;
     };
 
     recognition.onerror = (event)=>{
